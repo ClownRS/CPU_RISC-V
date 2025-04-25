@@ -1,0 +1,6 @@
+.VSCodeCounter/*
+.vscode/*
+build/*
+CPU_RISC-V.mpf
+riscv-privileged.pdf
+riscv-unprivileged.pdf

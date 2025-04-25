@@ -1,0 +1,216 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/CPU_RISC-V
+T_opt
+!s110 1745589090
+Vnk0CBJI8F;VXgBVmR<[KR2
+Z1 04 8 4 work cache_tb fast 0
+=7-00e04c94ca50-680b9362-149-47a4
+Z2 o-quiet -auto_acc_if_foreign -work work +acc
+Z3 tCvgOpt 0
+n@_opt
+Z4 OL;O;2020.4;71
+T_opt1
+!s110 1745579109
+V5eL6HBVh7M<>Go6P7mzYU2
+04 5 4 work cache fast 0
+R1
+=4-00e04c94ca50-680b6c65-1e6-2288
+R2
+R3
+n@_opt1
+R4
+R0
+vcache
+Z5 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z6 DXx4 work 16 cache_tb_sv_unit 0 22 Zh`=Nh4<?Q7L;TdJJNNFI2
+Z7 !s110 1745589075
+Z8 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+!i10b 1
+!s100 UIlSZk1=5n4D4_aP@?^M71
+IOAQTb`QZd1eB_i4;17HhP2
+Z9 !s105 cache_tb_sv_unit
+S1
+R0
+Z10 w1745589042
+Z11 8E:\CPU_RISC-V\testbench\..\src\cache.sv
+Z12 FE:\CPU_RISC-V\testbench\..\src\cache.sv
+!i122 87
+L0 401 35
+Z13 OL;L;2020.4;71
+31
+Z14 !s108 1745589075.000000
+Z15 !s107 E:\CPU_RISC-V\testbench\..\common\config.sv|E:\CPU_RISC-V\testbench\..\src\..\common\config.sv|E:\CPU_RISC-V\testbench\..\src\cache.sv|E:/CPU_RISC-V/testbench/cache_tb.sv|
+Z16 !s90 -reportprogress|300|-work|work|-vopt|-sv|E:/CPU_RISC-V/testbench/cache_tb.sv|
+!i113 0
+Z17 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R3
+Xcache_sv_unit
+R5
+R7
+V?@TG?HJeeHfk7IJ9<IY:;1
+r1
+!s85 0
+!i10b 1
+!s100 6KkZoV`Q<in2dGYGh`hH@1
+I?@TG?HJeeHfk7IJ9<IY:;1
+!i103 1
+S1
+R0
+R10
+8E:/CPU_RISC-V/src/cache.sv
+FE:/CPU_RISC-V/src/cache.sv
+FE:\CPU_RISC-V\src\..\common\config.sv
+!i122 86
+Z18 L0 113 0
+R13
+31
+R14
+!s107 E:\CPU_RISC-V\src\..\common\config.sv|E:/CPU_RISC-V/src/cache.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|E:/CPU_RISC-V/src/cache.sv|
+!i113 0
+R17
+R3
+vcache_tb
+R5
+R6
+R7
+R8
+r1
+!s85 0
+!i10b 1
+!s100 1YU3<^m?Q1ZgH740kcQHL3
+I15cAcJg`Ub:hUizK4I2eA0
+R9
+S1
+R0
+w1745588363
+Z19 8E:/CPU_RISC-V/testbench/cache_tb.sv
+Z20 FE:/CPU_RISC-V/testbench/cache_tb.sv
+!i122 87
+L0 4 165
+R13
+31
+R14
+R15
+R16
+!i113 0
+R17
+R3
+Xcache_tb_sv_unit
+R5
+R7
+VZh`=Nh4<?Q7L;TdJJNNFI2
+r1
+!s85 0
+!i10b 1
+!s100 2Zo2JoORAYkTTDd__Xaeb0
+IZh`=Nh4<?Q7L;TdJJNNFI2
+!i103 1
+S1
+R0
+R10
+R19
+R20
+R12
+FE:\CPU_RISC-V\testbench\..\src\..\common\config.sv
+FE:\CPU_RISC-V\testbench\..\common\config.sv
+!i122 87
+R18
+R13
+31
+R14
+R15
+R16
+!i113 0
+R17
+R3
+vInsDecoder
+R5
+R7
+!i10b 1
+!s100 PSf?LY5?HNMZG7<_ec>P]3
+Z21 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IG46<j4IljckZN2N7l_m?E0
+S1
+R0
+w1744897194
+8E:/CPU_RISC-V/src/ins_decoder.sv
+FE:/CPU_RISC-V/src/ins_decoder.sv
+!i122 85
+L0 13 212
+R8
+R13
+r1
+!s85 0
+31
+R14
+!s107 E:/CPU_RISC-V/src/ins_decoder.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|E:/CPU_RISC-V/src/ins_decoder.sv|
+!i113 0
+R17
+R3
+n@ins@decoder
+vset
+R5
+R6
+R7
+R8
+r1
+!s85 0
+!i10b 1
+!s100 0Ci`?hbRUTHiCeGfo]m=00
+IHdEcDQ^Ih3@;cDzE]EJ>>3
+R9
+S1
+R0
+R10
+R11
+R12
+!i122 87
+L0 183 217
+R13
+31
+R14
+R15
+R16
+!i113 0
+R17
+R3
+vway
+R9
+R6
+R5
+R7
+!i10b 1
+!s100 5nRgf_DMXE]WSM[;9QA6Q3
+R21
+I_H>lAz3<c?<X<LO`RXm`l0
+S1
+R0
+R10
+R11
+R12
+!i122 87
+L0 3 104
+R8
+R13
+r1
+!s85 0
+31
+R14
+R15
+R16
+!i113 0
+R17
+R3

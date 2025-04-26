@@ -10,6 +10,7 @@ module way(
     input wire write_enable,
     input wire load_enable,
     input wire read_enable,
+    input wire write_back_enable,
     input wire cs,
     input wire [1:0] byte_size, //00: 8bytes; 01: 16bytes; 10: 32bytes
     output wire [`MAX_BIT_POS:0] rdata,
@@ -50,7 +51,7 @@ module way(
     end
 
     integer j;
-    always @(addr or posedge write_enable or posedge read_enable or posedge load_enable) begin
+    always @(addr or posedge write_enable or posedge read_enable or negedge load_enable) begin
       //每次访问缓存，处理hit
         for (j = 0; j < `CACHE_LINES; j = j + 1) begin
           //hit
@@ -105,7 +106,7 @@ module way(
     assign rdata = (cs && read_enable && !load_enable) ? (byte_size == 2'b00 ? {24'b0, cache_data[index][(offset * 8) +: 8]} : 
     (byte_size == 2'b01 ? {16'b0, cache_data[index][(offset * 8) +: 16]} : cache_data[index][(offset * 8) +: 32])) : 
     {`XLEN{1'bz}};
-    assign write_back_data = cs ? cache_data[index] : {`CACHE_LINE_WIDTH{1'bz}};
+    assign write_back_data = (write_back_enable && cs) ? cache_data[index] : {`CACHE_LINE_WIDTH{1'bz}};
 
 endmodule
 
@@ -123,19 +124,24 @@ class LRUQueue;
   function new();
     size = 0;    
     head = 0;
-    last = 0;
+    last = -1;
   endfunction
 
   function void move_front(
-    input int index
+    input int index_in
   );
     integer i;
     reg [`CACHE_WAYS - 1:0] temp;
-    temp = data[index];
-    for (i = size - 1; i >= 0; i = i - 1) begin
+    temp = data[index_in];
+    for (i = index_in - 1; i >= 0; i = i - 1) begin
       data[i + 1] = data[i];
     end
     data[head] = temp;
+
+    $display("queue:\n");
+    for (i = 0; i < size; i = i + 1) begin
+      $display("%b\n", data[i]);
+    end
   endfunction
 
   function void push(
@@ -155,6 +161,11 @@ class LRUQueue;
     last = last + 1;
 
     data[head] = cs_way;
+
+    $display("queue:\n");
+    for (i = 0; i < size; i = i + 1) begin
+      $display("%b\n", data[i]);
+    end
   endfunction
 
   function [`CACHE_WAYS - 1:0] get_last();
@@ -266,6 +277,7 @@ module set (
       if (!selected) begin
         if (queue.size == `CACHE_WAYS) begin
           cs_way = queue.get_last();
+          $display("%b\n", cs_way);
           cs_way_index = queue.get_index(cs_way);
           queue.move_front(cs_way_index);
           return cs_way;
@@ -313,6 +325,7 @@ module set (
       queue = queues[index];
       cs = {`CACHE_WAYS{1'b0}};
       op_finished = 1'b0;
+      choosen_way = {`CACHE_WAYS{1'b0}};
     end
 
     always @(*) begin
@@ -327,9 +340,9 @@ module set (
           end
         end
         `S_ADDR: begin
-          choosen_way = hit_status;
           if (read_enable && !load_enable && !(|hit_status)) begin
             load_enable = 1'b1;
+            choosen_way = LRU(valid_status, hit_status, index);
             next_state = `S_IDLE;
           end
           else begin
@@ -349,17 +362,19 @@ module set (
         end
         `S_MEM: begin
           if (load_enable) begin
-            choosen_way = LRU(valid_status, hit_status, index);
             if (write_back_finished) begin
               if (!write_back_enable && dirty_status[validOf(choosen_way)]) begin
                 write_back_enable = 1'b1;  
+                cs = choosen_way; //set输出write_back_data由cs决定，write_back_enable是向外传递给组件的信号
                 #10;
               end
               else begin
+                write_back_enable = 1'b0;  
                 cs = choosen_way;
                 $display("load_finished.");
                 @(posedge clk);
                 load_enable = 1'b0;
+                op_finished = 1'b1; //一旦load_enable置零，马上就能触发rdata的assign语句，直接在此处结束操作即可。
                 next_state = `S_IDLE;
               end
             end
@@ -391,6 +406,7 @@ module set (
           .byte_size(byte_size),
           .write_back_data(write_back_data),
           .read_enable(read_enable),
+          .write_back_enable(write_back_enable),
           .cs(cs[k]),
           .load_enable(load_enable),
           .hit_way(hit_status[k]),

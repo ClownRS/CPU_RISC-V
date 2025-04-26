@@ -101,7 +101,7 @@ module cache_tb ();
       write_enable = 1'b0;
       addr = {`MAX_BIT_POS{1'b0}};
       read_enable = 1'b0;
-      write_back_finished = 1'b0;
+      write_back_finished = 1'b1;
 
       #20
       rst_n = 1'b0;
@@ -114,12 +114,14 @@ module cache_tb ();
       #21;
       read(32'h0000_0000, 2'b10);
       #21;
-      write(32'h10000_0000, 32'h0001_2345, 2'b10);
+      write(32'h1000_0000, 32'h0001_2345, 2'b10);
       #21;
       read(32'h1000_0000, 2'b10);
+      #21;
       write(32'h2000_0000, 32'h0012_3456, 2'b10);
       #21;
       read(32'h2000_0000, 2'b10);
+      #21;
       write(32'h3000_0000, 32'h0123_4567, 2'b10);
       #21;
       read(32'h3000_0000, 2'b10);
@@ -147,6 +149,7 @@ module cache_tb ();
       read(32'h0000_0000, 2'b10);
 
       // diffent index
+      #21;
       $display("\ndiffent index");
       #21;
       read_then_load(32'h0000_0010,128'h1010, 2'b10);
@@ -158,6 +161,7 @@ module cache_tb ();
       read(32'h0000_0000, 2'b10);
       
       // replace
+      #21;
       $display("\nreplace");
       #21;
       read_then_load(32'hB000_0000,128'h1111_2222_3333_4444_5555_6666_7777_BBBB, 2'b10);

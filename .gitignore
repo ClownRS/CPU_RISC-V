@@ -1,6 +1,11 @@
-.VSCodeCounter/*
-.vscode/*
-build/*
-CPU_RISC-V.mpf
-riscv-privileged.pdf
-riscv-unprivileged.pdf
+/.VSCodeCounter/
+/.vscode/
+/build/
+/CPU_RISC-V.mpf
+/riscv-privileged.pdf
+/riscv-unprivileged.pdf
+/CPU_RISC-V.cr.mti
+/tcl_stacktrace.txt
+/transcript
+/vsim.wlf
+work/

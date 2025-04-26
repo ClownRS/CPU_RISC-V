@@ -1,4 +1,5 @@
 `include "../common/config.sv"
+`timescale 1ns/1ns
 
 module way(
     input wire clk,
@@ -48,14 +49,17 @@ module way(
       end
     end
 
-    //处理write和load操作
     integer j;
+    always @(addr or posedge write_enable or posedge read_enable or posedge load_enable) begin
+      //每次访问缓存，处理hit
+        for (j = 0; j < `CACHE_LINES; j = j + 1) begin
+          //hit
+          hits[j] = (valids[j] && (tag_in == tags[j])) ? 1'b1 : 1'b0;
+        end
+    end
+
+    //处理write和load操作
     always @(posedge clk) begin
-    //每次访问缓存，处理hit
-      for (j = 1; j < `CACHE_LINES; j = j + 1) begin
-        //hit
-        hits[j] = (valids[j] && tag_in == tags[j]) ? 1'b1 : 1'b0;
-      end
       //由Set控制片选信号
       if (cs) begin
         //write
@@ -63,7 +67,7 @@ module way(
           case (byte_size)
             2'b00: cache_data[index][(offset * 8) +: 8] <= wdata[7:0];
             2'b01: cache_data[index][(offset * 8) +: 16] <= wdata[15:0];
-            2'b11: cache_data[index][(offset * 8) +: 32] <= wdata;
+            2'b10: cache_data[index][(offset * 8) +: 32] <= wdata;
           endcase
 
           //set dirty to 1
@@ -73,7 +77,7 @@ module way(
           //set tag
           tags[index] <= tag_in;
 
-          $display("valid: %b, tag: %b, dirty: %b, data: %h", valids[index], tags[index], dirties[index], cache_data[index]);
+          //$display("valid: %b, tag: %b, dirty: %b, data: 0x%h", valids[index], tags[index], dirties[index], cache_data[index]);
         end
         //load
         else if (load_enable) begin
@@ -86,7 +90,7 @@ module way(
           //set tag
           tags[index] <= tag_in;
 
-          $display("valid: %b, tag: %b, dirty: %b, data: %h", valids[index], tags[index], dirties[index], cache_data[index]);
+          //$display("valid: %b, tag: %b, dirty: %b, data: 0x%h", valids[index], tags[index], dirties[index], cache_data[index]);
         end
         else begin
           //do nothing
@@ -128,7 +132,7 @@ class LRUQueue;
     integer i;
     reg [`CACHE_WAYS - 1:0] temp;
     temp = data[index];
-    for (i = 0; i < index; i = i + 1) begin
+    for (i = size - 1; i >= 0; i = i - 1) begin
       data[i + 1] = data[i];
     end
     data[head] = temp;
@@ -138,16 +142,18 @@ class LRUQueue;
     reg [`CACHE_WAYS - 1:0] cs_way
   );
     integer i;
-    if (size == `CACHE_WAYS - 1) begin
+    if (size == `CACHE_WAYS) begin
       $display("The queue is full! Push failed!");
       return;
     end
 
-    size = size + 1;
-    last = last + 1;
-    for (i = 0; i < size; i = i + 1) begin
+    for (i = size - 1; i >= 0; i = i - 1) begin
       data[i + 1] = data[i];
     end
+
+    size = size + 1;
+    last = last + 1;
+
     data[head] = cs_way;
   endfunction
 
@@ -182,8 +188,8 @@ class LRUQueue;
 endclass
 module set (
     input wire clk,
-    input wire rst_n,
     input wire [`MAX_BIT_POS:0] addr,
+    input wire rst_n,
     input wire [`MAX_BIT_POS:0] wdata,
     input wire [`CACHE_LINE_WIDTH - 1:0] ldata,
     input wire [1:0] byte_size,
@@ -192,12 +198,11 @@ module set (
     input wire [`CACHE_WAYS - 1:0] valid_status,
     input wire write_enable,
     input wire read_enable,
-    input wire write_back_finished, 
-    input wire load_finished,
+    input wire write_back_finished,
     output reg load_enable,
-    output reg op_finished,
     output wire [`MAX_BIT_POS:0] rdata,
     output wire [`CACHE_LINE_WIDTH - 1:0] write_back_data,
+    output reg op_finished,
     output reg [`CACHE_WAYS - 1:0] cs,
     output reg write_back_enable
 );
@@ -229,7 +234,7 @@ module set (
         cs_way = hit_status;
         selected = 1'b1;
         cs_way_index = queue.get_index(cs_way);
-        if (cs_way != -1) begin
+        if (cs_way_index != -1) begin
           queue.move_front(cs_way_index);
         end
         else begin
@@ -270,12 +275,12 @@ module set (
       end
     endfunction
 
-    function validOf(
+    function int validOf(
       input [`CACHE_WAYS - 1:0] cs_way
     );
       int i;
       for (i = 0; i < `CACHE_WAYS; i = i + 1) begin
-        if (cs_way == 1'b1) begin
+        if (cs_way[i] == 1'b1) begin
           return i;
         end
       end
@@ -289,9 +294,12 @@ module set (
       if (!rst_n) begin
         for (i = 0; i < `CACHE_LINES; i = i + 1) begin
           queues[i] = new();
+          cs[i] = 1'b0;
         end
-        op_finished <= 1'b0;
+        load_enable <= 1'b0;
+        write_back_enable <= 1'b0;
         state <= `S_IDLE;
+        load_enable <= 1'b0;
       end
       else begin
       end
@@ -299,11 +307,11 @@ module set (
 
     always @(posedge clk) begin
       state <= next_state;
-    end
-
-    //当以下任意信号变化时，说明有新的操作
-    always @(addr or write_enable or read_enable or cs) begin
+    end 
+    
+    always @(addr or posedge write_enable or posedge read_enable) begin
       queue = queues[index];
+      cs = {`CACHE_WAYS{1'b0}};
       op_finished = 1'b0;
     end
 
@@ -345,19 +353,14 @@ module set (
             if (write_back_finished) begin
               if (!write_back_enable && dirty_status[validOf(choosen_way)]) begin
                 write_back_enable = 1'b1;  
+                #10;
               end
               else begin
-                //start loading
-                write_back_enable = 1'b0;
                 cs = choosen_way;
-                if (load_finished) begin
-                  load_enable = 1'b0;
-                  next_state = `S_IDLE;
-                end
-                else begin
-                  //load使能置零，下一次循环开始执行原来的read操作。
-                  next_state = state;
-                end
+                $display("load_finished.");
+                @(posedge clk);
+                load_enable = 1'b0;
+                next_state = `S_IDLE;
               end
             end
             else begin
@@ -377,7 +380,7 @@ module set (
     genvar k;
     generate
       for (k = 0; k < `CACHE_WAYS; k = k + 1) begin
-        way way(
+        way way (
           .clk(clk),
           .rst_n(rst_n),
           .wdata(wdata),
@@ -385,9 +388,9 @@ module set (
           .write_enable(write_enable),
           .addr(addr),
           .rdata(rdata),
+          .byte_size(byte_size),
           .write_back_data(write_back_data),
           .read_enable(read_enable),
-          .byte_size(byte_size),
           .cs(cs[k]),
           .load_enable(load_enable),
           .hit_way(hit_status[k]),
@@ -408,7 +411,6 @@ module cache (
   input write_enable,
   input read_enable,
   input write_back_finished,
-  input load_finished,
   output [`MAX_BIT_POS:0] rdata,
   output [`CACHE_LINE_WIDTH - 1:0] write_back_data,
   output write_back_enable,
@@ -427,7 +429,6 @@ module cache (
     .write_enable(write_enable),
     .read_enable(read_enable),
     .write_back_finished(write_back_finished),
-    .load_finished(load_finished),
     .write_back_enable(write_back_enable),
     .op_finished(op_finished)
   );

@@ -16,6 +16,8 @@ module cache_tb ();
   reg write_back_finished;
   reg write_back_enable;
   reg op_finished;
+  reg hit;
+  reg dirty;
 
   reg [`MAX_BIT_POS:0] read_out;
 
@@ -41,7 +43,9 @@ module cache_tb ();
     .read_enable(read_enable),
     .write_back_finished(write_back_finished),
     .write_back_enable(write_back_enable),
-    .op_finished(op_finished)
+    .op_finished(op_finished),
+    .hit(hit),
+    .dirty(dirty)
   );
 
     task read(
@@ -81,13 +85,19 @@ module cache_tb ();
       read_enable = 1'b1;
       byte_size = byte_size_in;
       #10;
-      wait(write_back_enable);
-      write_back_finished = 1'b0;
-      #10;
-      write_back_finished = 1'b1;
+
+      if (dirty) begin
+        wait(write_back_enable);
+        write_back_finished = 1'b0;
+        #10;
+        $display("write_back_data: 0x%h", write_back_data);
+        write_back_finished = 1'b1;
+      end
+      else begin
+      end
+
       ldata = ldata_in;
       wait(op_finished);
-      $display("write_back_data: 0x%h", write_back_data);
       $display("op: read, addr: 0x%h, rdata: 0x%h, op_finished: %b", addr, rdata, op_finished);
       read_enable = 1'b0;
     endtask
@@ -131,13 +141,13 @@ module cache_tb ();
       $display("way 0");
       read_then_load(32'h4000_0000,128'h1010_0000_1C1C_0000_1414_0000_1111, 2'b10);
       #21;
-      read(32'h0000_0000, 2'b10);
+      read(32'h4000_0000, 2'b10);
       #21;
-      read(32'h0000_0004, 2'b10);
+      read(32'h4000_0004, 2'b10);
       #21;
-      read(32'h0000_0008, 2'b10);
+      read(32'h4000_0008, 2'b10);
       #21;
-      read(32'h0000_000C, 2'b10);
+      read(32'h4000_000C, 2'b10);
 
       // way 1
       $display("\nway 1");

@@ -51,16 +51,17 @@ module way(
     end
 
     integer j;
-    always @(addr or posedge write_enable or posedge read_enable or negedge load_enable) begin
-      //每次访问缓存，处理hit
+    //处理write和load操作
+    always @(posedge clk) begin
+      if (write_enable || (read_enable && !load_enable)) begin
+        //每次访问缓存，处理hit
         for (j = 0; j < `CACHE_LINES; j = j + 1) begin
           //hit
           hits[j] = (valids[j] && (tag_in == tags[j])) ? 1'b1 : 1'b0;
         end
-    end
-
-    //处理write和load操作
-    always @(posedge clk) begin
+      end
+      else begin
+      end
       //由Set控制片选信号
       if (cs) begin
         //write
@@ -215,7 +216,9 @@ module set (
     output wire [`CACHE_LINE_WIDTH - 1:0] write_back_data,
     output reg op_finished,
     output reg [`CACHE_WAYS - 1:0] cs,
-    output reg write_back_enable
+    output reg write_back_enable,
+    output wire hit,
+    output reg dirty
 );
 
     LRUQueue queues [`CACHE_LINES - 1:0];
@@ -226,6 +229,7 @@ module set (
     reg [`CACHE_WAYS - 1:0] choosen_way;
 
     assign index = addr[9:4];
+    assign hit = |hit_status;
 
     function [`CACHE_WAYS - 1:0] LRU(
       input [`CACHE_WAYS - 1:0] valid_status,
@@ -325,6 +329,7 @@ module set (
       queue = queues[index];
       cs = {`CACHE_WAYS{1'b0}};
       op_finished = 1'b0;
+      dirty = 1'b0;
       choosen_way = {`CACHE_WAYS{1'b0}};
     end
 
@@ -343,6 +348,7 @@ module set (
           if (read_enable && !load_enable && !(|hit_status)) begin
             load_enable = 1'b1;
             choosen_way = LRU(valid_status, hit_status, index);
+            dirty = dirty_status[validOf(choosen_way)];
             next_state = `S_IDLE;
           end
           else begin
@@ -371,9 +377,13 @@ module set (
               else begin
                 write_back_enable = 1'b0;  
                 cs = choosen_way;
-                $display("load_finished.");
+
+                //写入需要一个周期
                 @(posedge clk);
                 load_enable = 1'b0;
+                $display("load_finished.");
+
+                @(posedge clk);
                 op_finished = 1'b1; //一旦load_enable置零，马上就能触发rdata的assign语句，直接在此处结束操作即可。
                 next_state = `S_IDLE;
               end
@@ -430,7 +440,9 @@ module cache (
   output [`MAX_BIT_POS:0] rdata,
   output [`CACHE_LINE_WIDTH - 1:0] write_back_data,
   output write_back_enable,
-  output op_finished
+  output op_finished,
+  output hit,
+  output dirty
 );
 
   set set(
@@ -446,7 +458,8 @@ module cache (
     .read_enable(read_enable),
     .write_back_finished(write_back_finished),
     .write_back_enable(write_back_enable),
-    .op_finished(op_finished)
+    .op_finished(op_finished),
+    .hit(hit),
+    .dirty(dirty)
   );
-  
 endmodule

@@ -58,6 +58,7 @@
     <wire from="(160,50)" to="(160,760)"/>
     <wire from="(200,320)" to="(200,580)"/>
     <wire from="(900,530)" to="(900,860)"/>
+    <wire from="(880,470)" to="(940,470)"/>
     <wire from="(830,620)" to="(830,690)"/>
     <wire from="(510,540)" to="(570,540)"/>
     <wire from="(530,620)" to="(570,620)"/>
@@ -67,9 +68,9 @@
     <wire from="(250,620)" to="(290,620)"/>
     <wire from="(210,250)" to="(500,250)"/>
     <wire from="(200,320)" to="(490,320)"/>
+    <wire from="(740,880)" to="(910,880)"/>
     <wire from="(430,560)" to="(470,560)"/>
     <wire from="(480,600)" to="(480,880)"/>
-    <wire from="(900,530)" to="(920,530)"/>
     <wire from="(550,50)" to="(550,480)"/>
     <wire from="(260,520)" to="(290,520)"/>
     <wire from="(540,520)" to="(570,520)"/>
@@ -82,6 +83,7 @@
     <wire from="(430,470)" to="(440,470)"/>
     <wire from="(210,250)" to="(210,560)"/>
     <wire from="(740,800)" to="(870,800)"/>
+    <wire from="(750,290)" to="(880,290)"/>
     <wire from="(140,250)" to="(210,250)"/>
     <wire from="(170,730)" to="(560,730)"/>
     <wire from="(740,760)" to="(820,760)"/>
@@ -89,7 +91,7 @@
     <wire from="(710,470)" to="(720,470)"/>
     <wire from="(710,620)" to="(830,620)"/>
     <wire from="(450,700)" to="(830,700)"/>
-    <wire from="(870,440)" to="(920,440)"/>
+    <wire from="(890,500)" to="(940,500)"/>
     <wire from="(460,180)" to="(460,500)"/>
     <wire from="(740,180)" to="(740,500)"/>
     <wire from="(430,520)" to="(430,530)"/>
@@ -125,14 +127,14 @@
     <wire from="(740,780)" to="(860,780)"/>
     <wire from="(520,500)" to="(570,500)"/>
     <wire from="(240,500)" to="(290,500)"/>
+    <wire from="(910,560)" to="(910,880)"/>
     <wire from="(180,320)" to="(180,850)"/>
     <wire from="(170,20)" to="(280,20)"/>
     <wire from="(160,50)" to="(270,50)"/>
     <wire from="(750,560)" to="(750,650)"/>
     <wire from="(540,430)" to="(540,520)"/>
-    <wire from="(880,470)" to="(920,470)"/>
+    <wire from="(900,530)" to="(940,530)"/>
     <wire from="(450,620)" to="(450,700)"/>
-    <wire from="(720,370)" to="(830,370)"/>
     <wire from="(890,500)" to="(890,840)"/>
     <wire from="(460,590)" to="(460,680)"/>
     <wire from="(260,430)" to="(260,520)"/>
@@ -145,12 +147,12 @@
     <wire from="(150,790)" to="(560,790)"/>
     <wire from="(870,440)" to="(870,800)"/>
     <wire from="(270,480)" to="(290,480)"/>
-    <wire from="(740,180)" to="(770,180)"/>
     <wire from="(250,80)" to="(530,80)"/>
     <wire from="(470,660)" to="(750,660)"/>
     <wire from="(720,370)" to="(720,470)"/>
     <wire from="(280,460)" to="(290,460)"/>
     <wire from="(480,880)" to="(560,880)"/>
+    <wire from="(870,440)" to="(940,440)"/>
     <wire from="(710,590)" to="(790,590)"/>
     <wire from="(560,460)" to="(570,460)"/>
     <wire from="(520,500)" to="(520,830)"/>
@@ -163,12 +165,12 @@
     <wire from="(240,500)" to="(240,840)"/>
     <wire from="(250,80)" to="(250,620)"/>
     <wire from="(480,600)" to="(570,600)"/>
-    <wire from="(750,290)" to="(770,290)"/>
     <wire from="(780,640)" to="(780,740)"/>
     <wire from="(860,680)" to="(860,780)"/>
+    <wire from="(910,560)" to="(940,560)"/>
     <wire from="(180,320)" to="(200,320)"/>
     <wire from="(460,180)" to="(740,180)"/>
-    <wire from="(890,500)" to="(920,500)"/>
+    <wire from="(720,370)" to="(940,370)"/>
     <wire from="(500,250)" to="(500,560)"/>
     <wire from="(140,150)" to="(220,150)"/>
     <wire from="(490,580)" to="(570,580)"/>
@@ -178,18 +180,12 @@
     <wire from="(550,820)" to="(560,820)"/>
     <wire from="(520,830)" to="(530,830)"/>
     <wire from="(740,820)" to="(880,820)"/>
-    <comp lib="0" loc="(140,80)" name="Pin">
-      <a name="width" val="2"/>
+    <wire from="(740,180)" to="(880,180)"/>
+    <comp loc="(430,470)" name="Way"/>
+    <comp lib="0" loc="(140,250)" name="Pin">
+      <a name="width" val="32"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="byte_size"/>
-    </comp>
-    <comp loc="(710,470)" name="Way"/>
-    <comp lib="0" loc="(140,320)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="write_enable"/>
-    </comp>
-    <comp lib="0" loc="(770,640)" name="Splitter">
-      <a name="facing" val="west"/>
+      <a name="label" val="ldata"/>
     </comp>
     <comp lib="0" loc="(550,820)" name="Splitter">
       <a name="facing" val="west"/>
@@ -197,70 +193,83 @@
     <comp lib="0" loc="(140,50)" name="Pin">
       <a name="label" val="rst_n"/>
     </comp>
-    <comp lib="0" loc="(140,250)" name="Pin">
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="ldata"/>
-    </comp>
     <comp lib="0" loc="(140,20)" name="Pin">
       <a name="label" val="clk"/>
     </comp>
-    <comp lib="0" loc="(920,440)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="write_back_finished"/>
-    </comp>
-    <comp lib="0" loc="(920,470)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="write_back_enable"/>
-    </comp>
-    <comp loc="(550,820)" name="Set"/>
-    <comp lib="0" loc="(810,660)" name="Splitter">
+    <comp lib="0" loc="(850,680)" name="Splitter">
       <a name="facing" val="west"/>
     </comp>
-    <comp lib="0" loc="(770,290)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="write_back_data"/>
-    </comp>
-    <comp lib="0" loc="(770,180)" name="Pin">
+    <comp lib="0" loc="(880,180)" name="Pin">
       <a name="facing" val="west"/>
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="rdata"/>
+    </comp>
+    <comp lib="0" loc="(770,640)" name="Splitter">
+      <a name="facing" val="west"/>
+    </comp>
+    <comp lib="0" loc="(140,320)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="write_enable"/>
     </comp>
     <comp lib="0" loc="(140,150)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="wdata"/>
     </comp>
-    <comp lib="0" loc="(920,500)" name="Pin">
+    <comp lib="0" loc="(940,440)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="write_back_finished"/>
+    </comp>
+    <comp lib="0" loc="(940,370)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="read_enable"/>
+    </comp>
+    <comp lib="0" loc="(940,470)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="write_back_enable"/>
+    </comp>
+    <comp lib="0" loc="(810,660)" name="Splitter">
+      <a name="facing" val="west"/>
+    </comp>
+    <comp loc="(710,470)" name="Way"/>
+    <comp lib="0" loc="(140,80)" name="Pin">
+      <a name="width" val="2"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="byte_size"/>
+    </comp>
+    <comp lib="0" loc="(880,290)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="width" val="32"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="write_back_data"/>
+    </comp>
+    <comp lib="0" loc="(940,530)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="hit"/>
+    </comp>
+    <comp loc="(550,820)" name="Set"/>
+    <comp lib="0" loc="(940,500)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="tristate" val="false"/>
       <a name="label" val="op_finished"/>
     </comp>
-    <comp lib="0" loc="(850,680)" name="Splitter">
-      <a name="facing" val="west"/>
-    </comp>
     <comp lib="0" loc="(140,430)" name="Pin">
       <a name="width" val="32"/>
       <a name="label" val="addr"/>
     </comp>
-    <comp loc="(430,470)" name="Way"/>
-    <comp lib="0" loc="(830,370)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="read_enable"/>
-    </comp>
-    <comp lib="0" loc="(920,530)" name="Pin">
+    <comp lib="0" loc="(940,560)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="load_finished"/>
+      <a name="label" val="dirty"/>
     </comp>
   </circuit>
   <circuit name="Way">
@@ -304,25 +313,34 @@
       <circ-port height="8" pin="360,380" width="8" x="186" y="76"/>
       <circ-anchor facing="east" height="6" width="6" x="187" y="77"/>
     </appear>
-    <comp lib="0" loc="(360,420)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="hit_way"/>
-    </comp>
     <comp lib="0" loc="(180,540)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="ldata"/>
     </comp>
-    <comp lib="0" loc="(180,250)" name="Pin">
+    <comp lib="0" loc="(360,500)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="rst_n"/>
+      <a name="label" val="valid_way"/>
     </comp>
     <comp lib="0" loc="(180,360)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="addr"/>
+    </comp>
+    <comp lib="0" loc="(360,210)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="32"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="rdata"/>
+    </comp>
+    <comp lib="0" loc="(360,460)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="dirty_way"/>
     </comp>
     <comp lib="0" loc="(360,310)" name="Pin">
       <a name="facing" val="west"/>
@@ -331,22 +349,9 @@
       <a name="tristate" val="false"/>
       <a name="label" val="write_back_data"/>
     </comp>
-    <comp lib="0" loc="(360,380)" name="Pin">
-      <a name="facing" val="west"/>
+    <comp lib="0" loc="(180,290)" name="Pin">
       <a name="tristate" val="false"/>
-      <a name="label" val="read_enable"/>
-    </comp>
-    <comp lib="0" loc="(360,500)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="valid_way"/>
-    </comp>
-    <comp lib="0" loc="(360,460)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="dirty_way"/>
+      <a name="label" val="cs"/>
     </comp>
     <comp lib="0" loc="(180,210)" name="Pin">
       <a name="tristate" val="false"/>
@@ -356,30 +361,34 @@
       <a name="tristate" val="false"/>
       <a name="label" val="load_enable"/>
     </comp>
-    <comp lib="0" loc="(180,690)" name="Pin">
-      <a name="width" val="2"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="byte_size"/>
-    </comp>
-    <comp lib="0" loc="(360,210)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(180,450)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="rdata"/>
+      <a name="label" val="wdata"/>
+    </comp>
+    <comp lib="0" loc="(360,420)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="hit_way"/>
     </comp>
     <comp lib="0" loc="(180,610)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="write_enable"/>
     </comp>
-    <comp lib="0" loc="(180,290)" name="Pin">
+    <comp lib="0" loc="(360,380)" name="Pin">
+      <a name="facing" val="west"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="cs"/>
+      <a name="label" val="read_enable"/>
     </comp>
-    <comp lib="0" loc="(180,450)" name="Pin">
-      <a name="width" val="32"/>
+    <comp lib="0" loc="(180,690)" name="Pin">
+      <a name="width" val="2"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="wdata"/>
+      <a name="label" val="byte_size"/>
+    </comp>
+    <comp lib="0" loc="(180,250)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="rst_n"/>
     </comp>
   </circuit>
   <circuit name="Set">
@@ -390,21 +399,22 @@
     <appear>
       <path d="M61,51 Q65,61 69,51" fill="none" stroke="#808080" stroke-width="2"/>
       <rect fill="none" height="211" stroke="#000000" stroke-width="2" width="180" x="50" y="50"/>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="194" y="83">hit_status</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="190" y="104">dirty_status</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="197" y="83">hit_status</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="193" y="104">dirty_status</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="66" y="163">cs</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="137" y="97">Set</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="189" y="124">valid_status</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="140" y="97">Set</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="192" y="124">valid_status</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="72" y="134">addr</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="93" y="194">write_enable</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="90" y="223">load_enable</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="91" y="252">read_enable</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="67" y="74">clk</text>
       <text font-family="SansSerif" font-size="12" text-anchor="middle" x="73" y="104">rst_n</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="171" y="164">write_back_enable</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="168" y="144">write_back_finished</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="187" y="184">op_finished</text>
-      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="184" y="203">load_finished</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="174" y="164">write_back_enable</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="171" y="144">write_back_finished</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="190" y="184">op_finished</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="212" y="204">hit</text>
+      <text font-family="SansSerif" font-size="12" text-anchor="middle" x="207" y="223">dirty</text>
       <circ-port height="8" pin="280,220" width="8" x="226" y="76"/>
       <circ-port height="8" pin="280,260" width="8" x="226" y="96"/>
       <circ-port height="10" pin="390,160" width="10" x="45" y="155"/>
@@ -419,8 +429,32 @@
       <circ-port height="8" pin="390,230" width="8" x="226" y="136"/>
       <circ-port height="10" pin="390,290" width="10" x="225" y="175"/>
       <circ-port height="10" pin="390,320" width="10" x="225" y="195"/>
+      <circ-port height="10" pin="390,350" width="10" x="225" y="215"/>
       <circ-anchor facing="east" height="6" width="6" x="37" y="157"/>
     </appear>
+    <comp lib="0" loc="(390,320)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="hit"/>
+    </comp>
+    <comp lib="0" loc="(390,160)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="2"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="cs"/>
+    </comp>
+    <comp lib="0" loc="(280,140)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="0" loc="(390,290)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="op_finished"/>
+    </comp>
     <comp lib="0" loc="(280,260)" name="Pin">
       <a name="width" val="2"/>
       <a name="tristate" val="false"/>
@@ -430,30 +464,15 @@
       <a name="tristate" val="false"/>
       <a name="label" val="rst_n"/>
     </comp>
-    <comp lib="0" loc="(280,220)" name="Pin">
-      <a name="width" val="2"/>
+    <comp lib="0" loc="(280,380)" name="Pin">
       <a name="tristate" val="false"/>
-      <a name="label" val="dirty_status"/>
+      <a name="label" val="read_enable"/>
     </comp>
-    <comp lib="0" loc="(390,320)" name="Pin">
+    <comp lib="0" loc="(390,350)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="load_finished"/>
-    </comp>
-    <comp lib="0" loc="(390,230)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="write_back_finished"/>
-    </comp>
-    <comp lib="0" loc="(280,140)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="clk"/>
-    </comp>
-    <comp lib="0" loc="(280,300)" name="Pin">
-      <a name="width" val="2"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="valid_status"/>
+      <a name="label" val="dirty"/>
     </comp>
     <comp lib="0" loc="(390,260)" name="Pin">
       <a name="facing" val="west"/>
@@ -461,15 +480,24 @@
       <a name="tristate" val="false"/>
       <a name="label" val="write_back_enable"/>
     </comp>
-    <comp lib="0" loc="(390,290)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(280,70)" name="Pin">
+      <a name="width" val="32"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="op_finished"/>
+      <a name="label" val="addr"/>
     </comp>
     <comp lib="0" loc="(280,340)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="write_enable"/>
+    </comp>
+    <comp lib="0" loc="(280,300)" name="Pin">
+      <a name="width" val="2"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="valid_status"/>
+    </comp>
+    <comp lib="0" loc="(390,230)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="write_back_finished"/>
     </comp>
     <comp lib="0" loc="(390,200)" name="Pin">
       <a name="facing" val="west"/>
@@ -477,21 +505,10 @@
       <a name="tristate" val="false"/>
       <a name="label" val="load_enable"/>
     </comp>
-    <comp lib="0" loc="(280,70)" name="Pin">
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="addr"/>
-    </comp>
-    <comp lib="0" loc="(280,380)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="read_enable"/>
-    </comp>
-    <comp lib="0" loc="(390,160)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(280,220)" name="Pin">
       <a name="width" val="2"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="cs"/>
+      <a name="label" val="dirty_status"/>
     </comp>
   </circuit>
 </project>
